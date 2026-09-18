@@ -1,0 +1,8 @@
+# OS and editor droppings
+Thumbs.db
+desktop.ini
+.DS_Store
+*.swp
+
+# Nothing here is generated: three.js is vendored on purpose so the
+# project runs with no network and no build step.
