@@ -28,6 +28,14 @@ project by looking at it. This has consequences:
 Working language is Slovak in conversation, English in code, comments
 and docs.
 
+## Kamosféra
+
+This world is fed by Kamosféra (repo `jakub10/kamosfera`) through one
+function, `world_seed()`, read by `src/kamosfera.js`. Do not read
+anything else from that database, and do not widen what the seed
+carries without changing the privacy test on the other side. Identity
+crosses (nickname, avatar, friends); content never does.
+
 ## Non-negotiables
 
 These come from the brief. If a change would break one, stop and ask.

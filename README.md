@@ -1,8 +1,28 @@
-# Dream World
+# Kamosvět
 
-A fog world that grows with the person walking in it. See
+A fog world that grows with the person walking in it — the world half of
+Kamosféra, a children's social network. It began as Dream World; the
+name changed, the rule did not. See
 `dream-world-brief.md` for what this is, `NEXT.md` for the decisions and the
 current instructions, and `CLAUDE.md` for how it is worked on.
+
+## How a person gets in
+
+Kamosvět has no login. The only door is Kamosféra: its page `/svet`
+opens this world with the person's session in the URL fragment, and
+`src/kamosfera.js` asks Kamosféra's database one question,
+`world_seed()`. The answer is a distillation of a life — nickname,
+avatar, growth, the shape of their attention, their friends and how much
+time they shared with each. Never a real name, an e-mail, a message, a
+post or a place. That contract is tested on Kamosféra's side
+(`supabase/tests/03_world_seed.sql`).
+
+Opened without Kamosféra, the world boots as the Nothing at growth 0,
+which is not a fallback: a world nobody has lived in is supposed to be
+empty. The panel still works for tuning.
+
+`reference/udoli-ozven/` holds Jakub's first world — the vocabulary of
+what growth will one day turn into.
 
 ## Running it
 

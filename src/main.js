@@ -31,6 +31,7 @@ import {
 import { Player } from './player.js';
 import { createUI, createHUD, createHint, loadSettings, saveSettings } from './ui.js';
 import { GpuTimer } from './gputimer.js';
+import { loadSeed } from './kamosfera.js';
 
 function fail(message) {
   const box = document.createElement('div');
@@ -41,7 +42,7 @@ function fail(message) {
 
 window.addEventListener('error', (e) => fail('Chyba: ' + e.message));
 
-function boot() {
+function boot(seed) {
   const canvas = document.getElementById('view');
 
   // Read before anything else: the renderer cannot change its mind about
@@ -82,6 +83,15 @@ function boot() {
     quality: { scale: 1.0, msaa: 0 },
   };
   const settings = loadSettings(defaults);
+  // A person who arrived from Kamosféra brings their own numbers. They
+  // outrank anything saved on this machine: the world is theirs, not the
+  // browser's. The panel can still move them afterwards, for tuning.
+  if (seed) {
+    settings.identity = seed.identity;
+    settings.epoch = seed.epoch;
+    settings.dev = deviationFrom(seed.identity, seed.epoch, seed.growth);
+    settings.seed = seed;
+  }
 
   // -------------------------------------------------------------- pieces
   const worldU = makeWorldUniforms(settings.base);
@@ -138,6 +148,7 @@ function boot() {
 
   const player = new Player(canvas);
   const hud = createHUD();
+  if (seed && seed.name) hud.who(seed.name, seed.growth);
   const hint = createHint();
   player.onLockChange = (locked) => hint.show(!locked);
 
@@ -345,4 +356,6 @@ function boot() {
   requestAnimationFrame(frame);
 }
 
-boot();
+// The seed comes first, then the world. Without Kamosféra the world boots
+// as the Nothing, which is what it is supposed to be.
+loadSeed().then(boot, () => boot(null));

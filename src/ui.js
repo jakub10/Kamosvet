@@ -312,7 +312,14 @@ export function createHUD() {
 
   let acc = 0, frames = 0, work = 0, gpu = 0, fps = 0, haveGpu = false;
 
+  // Whose world this is, when someone arrived from Kamosféra.
+  const who = el('div', 'hud-who');
+  root.insertBefore(who, cost);
+
   return {
+    who(name, growth) {
+      who.textContent = `${name} · ${Math.round((growth || 0) * 100)} %`;
+    },
     // The number that matters is what the card took. The time spent in
     // JavaScript is shown next to it, small, because on this world it is
     // nearly always the lesser half and used to be mistaken for the whole.
